@@ -1,14 +1,14 @@
-
+import 'package:blocdemoapp/features/wishlist/bloc/wishlist_bloc.dart';
 import 'package:flutter/material.dart';
 
-import '../bloc/home_bloc.dart';
-import '../models/home_product_data_model.dart';
+import '../../home/models/home_product_data_model.dart';
 
-class ProductTileWidget extends StatelessWidget {
+class WishlistTileWidget extends StatelessWidget {
   final HomeProductDataModel productDataModel;
 
-  final HomeBloc homeBloc;
-  const ProductTileWidget({super.key, required this.productDataModel, required this.homeBloc});
+  final WishlistBloc wishlistBloc;
+  const WishlistTileWidget(
+      {required this.productDataModel, required this.wishlistBloc});
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +16,8 @@ class ProductTileWidget extends StatelessWidget {
       decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.circular(10)),
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(10),
+      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -27,55 +27,46 @@ class ProductTileWidget extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: NetworkImage(productDataModel.imageUrl),
-                    fit: BoxFit.fill
-                    )),
+                    fit: BoxFit.fill)),
           ),
           const SizedBox(
             height: 20,
           ),
           Text(
             productDataModel.name,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold
-            ),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Text(productDataModel.description),
           const SizedBox(
             height: 20,
           ),
-          Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '\$ ${productDataModel.price}',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold
-                ),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-
-              Row(children: [
-                 IconButton(
-                      onPressed: () {
-                        homeBloc.add(HomeProductWishlistButtonClickedEvent(
-                          clickedProduct: productDataModel)
-                        );
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                        wishlistBloc.add(WishlistRemoveItemEvent(productDataModel));
                       },
-                      icon: const Icon(Icons.favorite_border)),
+                      icon: const Icon(Icons.favorite)
+                      ),
                   const SizedBox(
                     width: 10,
                   ),
                   IconButton(
                       onPressed: () {
-                        homeBloc.add(HomeProductCartButtonClickedEvent(
-                          clickedProduct: productDataModel
-                        ));
+                       // wishlistBloc.add(WishlistRemoveItemEvent(productDataModel));
                       },
                       icon: const Icon(Icons.shopping_bag_outlined))
-              ],)
+                ],
+              )
             ],
           ),
-          
         ],
       ),
     );

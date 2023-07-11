@@ -39,10 +39,10 @@ class _Home extends State<Home> {
           GoRouter.of(context).pushNamed(AppRouteConstants.cart);
         } else if (state is HomeProductItemCartActionState) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Item added to Cart')));
+              .showSnackBar(const SnackBar(content: Text('Item added to Cart')));
         }else if(state is HomeProductItemWishlistActionState){
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Item added to Wishlist')));
+              .showSnackBar(const SnackBar(content: Text('Item added to Wishlist')));
         }
       },
       builder: (BuildContext context, HomeState state) {
